@@ -12,6 +12,7 @@ class StartScreen extends StatelessWidget {
           Image.asset(
             'lib/assets/images/quiz-logo.png',
             width: 300,
+            color: Color.fromARGB(150, 255, 255, 255),
           ),
           const SizedBox(
             height: 80,
@@ -26,13 +27,14 @@ class StartScreen extends StatelessWidget {
           const SizedBox(
             height: 30,
           ),
-          OutlinedButton(
+          OutlinedButton.icon(
             onPressed: () {},
             style: OutlinedButton.styleFrom(
               foregroundColor: Colors.white,
               padding: const EdgeInsets.all(20),
             ),
-            child: const Text(
+            icon: const Icon(Icons.arrow_right_alt),
+            label: const Text(
               'start quiz',
               style: TextStyle(fontSize: 20),
             ),
