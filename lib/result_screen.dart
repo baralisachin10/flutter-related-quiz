@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:quiz_app/dummy_data/dummy_data.dart';
 import 'package:quiz_app/question_summary.dart';
 
-class ResultScreen extends StatelessWidget {
+class ResultScreen extends StatefulWidget {
   const ResultScreen({
     super.key,
     required this.choosenAnswer,
@@ -10,16 +10,21 @@ class ResultScreen extends StatelessWidget {
 
   final List<String> choosenAnswer;
 
+  @override
+  State<ResultScreen> createState() => _ResultScreenState();
+}
+
+class _ResultScreenState extends State<ResultScreen> {
   List<Map<String, Object>> getSummarData() {
     final List<Map<String, Object>> summary = [];
 
-    for (var i = 0; i < choosenAnswer.length; i++) {
+    for (var i = 0; i < widget.choosenAnswer.length; i++) {
       summary.add(
         {
           'question_index': i,
           'question': questions[i].questions,
           'correct_answer': questions[i].answers[0],
-          'user_answer': choosenAnswer
+          'user_answer': widget.choosenAnswer[i]
         },
       );
     }
@@ -29,6 +34,11 @@ class ResultScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final summaryData = getSummarData();
+    final numTotalQuestions = questions.length;
+    final numCorrectQuestions = summaryData.where((data) {
+      return data['user_answer'] == data['correct_answer'];
+    }).length;
     return SizedBox(
       width: double.infinity,
       child: Container(
@@ -36,7 +46,8 @@ class ResultScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text('You answered X questions out of Y questions'),
+            Text(
+                'You answered $numCorrectQuestions questions out of $numTotalQuestions questions'),
             const SizedBox(
               height: 30,
             ),
@@ -45,7 +56,7 @@ class ResultScreen extends StatelessWidget {
               height: 30,
             ),
             TextButton.icon(
-              onPressed: () {},
+              onPressed: (){},
               icon: const Icon(Icons.restart_alt),
               label: const Text('Restart Quiz!!'),
             )
