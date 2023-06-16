@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:quiz_app/dummy_data/dummy_data.dart';
 import 'package:quiz_app/question_summary.dart';
 
@@ -6,9 +7,11 @@ class ResultScreen extends StatefulWidget {
   const ResultScreen({
     super.key,
     required this.choosenAnswer,
+    required this.onRestart,
   });
 
   final List<String> choosenAnswer;
+  final void Function() onRestart;
 
   @override
   State<ResultScreen> createState() => _ResultScreenState();
@@ -47,7 +50,14 @@ class _ResultScreenState extends State<ResultScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-                'You answered $numCorrectQuestions questions out of $numTotalQuestions questions'),
+              'You answered $numCorrectQuestions questions out of $numTotalQuestions questions',
+              style: GoogleFonts.lato(
+                fontSize: 24,
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+              ),
+              textAlign: TextAlign.center,
+            ),
             const SizedBox(
               height: 30,
             ),
@@ -56,9 +66,14 @@ class _ResultScreenState extends State<ResultScreen> {
               height: 30,
             ),
             TextButton.icon(
-              onPressed: (){},
+              onPressed: widget.onRestart,
               icon: const Icon(Icons.restart_alt),
-              label: const Text('Restart Quiz!!'),
+              label: Text(
+                'Restart Quiz!!',
+                style: GoogleFonts.lato(
+                  fontSize: 18,
+                ),
+              ),
             )
           ],
         ),
