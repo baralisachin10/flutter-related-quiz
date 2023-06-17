@@ -18,7 +18,7 @@ class ResultScreen extends StatefulWidget {
 }
 
 class _ResultScreenState extends State<ResultScreen> {
-  List<Map<String, Object>> getSummarData() {
+  List<Map<String, Object>> get summaryOfData {
     final List<Map<String, Object>> summary = [];
 
     for (var i = 0; i < widget.choosenAnswer.length; i++) {
@@ -37,11 +37,10 @@ class _ResultScreenState extends State<ResultScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final summaryData = getSummarData();
     final numTotalQuestions = questions.length;
-    final numCorrectQuestions = summaryData.where((data) {
-      return data['user_answer'] == data['correct_answer'];
-    }).length;
+    final numCorrectQuestions = summaryOfData
+        .where((data) => data['user_answer'] == data['correct_answer'])
+        .length;
     return SizedBox(
       width: double.infinity,
       child: Container(
@@ -61,7 +60,7 @@ class _ResultScreenState extends State<ResultScreen> {
             const SizedBox(
               height: 30,
             ),
-            QuestionSummary(getSummarData()),
+            QuestionSummary(summaryOfData),
             const SizedBox(
               height: 30,
             ),
